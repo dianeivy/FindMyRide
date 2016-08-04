@@ -11,7 +11,7 @@ db_name = 'hubway_db'
 
 
 def create_findmyride_database(database_name):
-    engine = create_engine('postgresql://%s:%s@localhost/%s'%('dianeivy', 'tmp_password', database_name))
+    engine = create_engine('postgresql://%s:%s@localhost/%s'%('dianeivy', password, database_name))
     print(engine.url)
     if not database_exists(engine.url):
         create_database(engine.url)
@@ -36,7 +36,7 @@ def count_events(engine):
     session.configure(bind=engine)
     s = session()
 
-    con = psycopg2.connect(database=db_name, user='dianeivy', host='localhost', password='tmp_password')
+    con = psycopg2.connect(database=db_name, user='dianeivy', host='localhost', password=password)
     sql_query = "SELECT * FROM station_info;"
     station_info = pd.read_sql_query(sql_query, con)
 
