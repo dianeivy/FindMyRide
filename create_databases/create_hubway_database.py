@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 
 
 def create_findmyride_database(database_name):
-    engine = create_engine('postgresql://%s:%s@localhost/%s'%('dianeivy', 'tmp_password', database_name))
+    engine = create_engine('postgresql://%s:%s@localhost/%s'%('dianeivy', password, database_name))
     print(engine.url)
 
     if not database_exists(engine.url):
