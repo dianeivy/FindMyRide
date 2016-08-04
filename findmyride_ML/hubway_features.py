@@ -6,7 +6,7 @@ from convertdate import holidays
 
 
 def load_hubway_database():
-    return psycopg2.connect(database='hubway_db', user='dianeivy', host='localhost', password='tmp_password')
+    return psycopg2.connect(database='hubway_db', user='dianeivy', host='localhost', password=password)
 
 
 def find_station_id(con, address_latitude, address_longitude):
