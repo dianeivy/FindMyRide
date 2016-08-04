@@ -18,12 +18,6 @@ rcParams['ytick.minor.size'] = 0
 rcParams['ytick.major.pad'] = '5'
 rcParams['xtick.major.pad'] = '5'
 
-# figure()
-# subplot(1, 1, 1)
-# plot(hubway_data['event_date'], hubway_data['num_bikes'], 'k.')
-# ylabel('Number Bikes')
-# show()
-
 weekend_color = np.array([0, 221, 221]) / 255.
 weekday_color = [0.65, 0.65, 0.65]
 def fix_axes(ax):
@@ -86,61 +80,3 @@ for i in xrange(len(morning_dates)):
     else:
         plot(morning_dates[i], morning_bikes[i], 'ko')
 show()
-
-# figure()
-# subplot(3, 1, 1)
-# plot(morning_dates, morning_bikes, 'k.')
-# subplot(3, 1, 2)
-# plot(morning_dates, morning_temp, 'k.')
-# subplot(3, 1, 3)
-# plot(morning_dates, morning_rain, 'k.')
-# savefig('blah.pdf')
-# show()
-# figure()
-# subplot(1, 1, 1)
-# plot(hubway_data['event_date'], hubway_data['num_bikes'], 'k.')
-# ylabel('Number Bikes')
-# show()
-#
-# def calc_restock():
-# figure()
-#
-# #
-# #
-# # ax = subplot(3, 1, 2)
-# # hubway_wd_rain = hubway_wd[(hubway_wd['precip'] >= 0.005) & (hubway_data['month'] > 3)].groupby(['hour_of_day'])['num_bikes'].mean()
-# # hubway_wd_norain = hubway_wd[(hubway_wd['precip'] < 0.005) & (hubway_data['month'] > 3)].groupby(['hour_of_day'])['num_bikes'].mean()
-# # hubway_we_rain = hubway_we[(hubway_we['precip'] >= 0.005) & (hubway_data['month'] > 3)].groupby(['hour_of_day'])['num_bikes'].mean()
-# # hubway_we_norain = hubway_we[(hubway_we['precip'] < 0.005) & (hubway_data['month'] > 3)].groupby(['hour_of_day'])['num_bikes'].mean()
-# #
-# #
-# # plot(hubway_we_norain, color=weekend_color, lw=1.5, label='No Rain')
-# # pl, = plot(hubway_we_rain, '--', color=weekend_color, lw=1.5, label='Rain')
-# # pl.set_dashes([1, 1])
-# # l = legend(loc='best')
-# # for text in l.get_texts():
-# #     text.set_color(weekday_color)
-# # pl, = plot(hubway_wd_rain, '--', color=weekday_color, lw=1.5)
-# # pl.set_dashes([1, 1])
-# # plot(hubway_wd_norain, color=weekday_color, lw=1.5)
-# # fix_axes(ax)
-# #
-# # fix_axes(ax)
-# #
-# # ax = subplot(3, 1, 3)
-# # hubway_wd_cold = hubway_wd[(hubway_wd['temp_avg'] < 5) & (hubway_data['month'] > 3)].groupby(['hour_of_day'])['num_bikes'].mean()
-# # hubway_wd_warm = hubway_wd[(hubway_wd['temp_avg'] >= 5) & (hubway_data['month'] > 3)].groupby(['hour_of_day'])['num_bikes'].mean()
-# # hubway_we_cold = hubway_we[(hubway_we['temp_avg'] < 5) & (hubway_data['month'] > 3)].groupby(['hour_of_day'])['num_bikes'].mean()
-# # hubway_we_warm = hubway_we[(hubway_we['temp_avg'] >= 5) & (hubway_data['month'] > 3)].groupby(['hour_of_day'])['num_bikes'].mean()
-# #
-# # plot(hubway_we_warm, color=weekend_color, lw=1.5, label='Warm')
-# # plot(hubway_we_cold, '--', color=weekend_color, lw=1.5, label='Cold')
-# # l = legend(loc='best')
-# # for text in l.get_texts():
-# #     text.set_color(weekday_color)
-# # plot(hubway_wd_warm, color=weekday_color, lw=1.5)
-# # plot(hubway_wd_cold, '--', color=weekday_color, lw=1.5)
-# # # tight_layout(rect=(0, 0, 1, 0.97))
-# # fix_axes(ax)
-# # savefig('station_hour_%d.pdf' %station_number)
-# # show()

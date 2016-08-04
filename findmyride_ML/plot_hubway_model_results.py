@@ -60,12 +60,6 @@ def plot_features():
     all_features = get_features()
 
     figure(figsize=(5, 3))
-    # subplot(1, 2, 1)
-    # pcolor(all_features, cmap=get_ncl_cmap('grads_rainbow'))
-    # xticks(np.arange(len(model_features)) + 0.5, model_features)
-    # yticks([])
-    # colorbar()
-
     ax = subplot(1, 1, 1)
     feature_importance = ma.mean(all_features, axis=0)
     indices = np.argsort(feature_importance)[::-1]
@@ -112,19 +106,3 @@ def plot_average_cm():
 # plot_average_cm()
 plot_features()
 show()
-
-# fig = figure()
-# rf_cms = get_cm()
-# for index, cm in enumerate(rf_cms[:12]):
-#     ax = subplot(3, 4, index + 1)
-#     cb = imshow(cm.astype('float') / cm.sum(axis=1)[:, None], interpolation='nearest', cmap=get_my_cmap('precip_11lev'), vmin=0, vmax=1)
-#     if index in np.arange(0, 12, 4):
-#         yticks(np.arange(3), ['0 Bikes', '1-2 Bikes', '2+ Bikes'])
-#     else:
-#         yticks([])
-#     if index in np.arange(8, 12):
-#         xticks(np.arange(3), ['0 Bikes', '1-2 Bikes', '2+ Bikes'])
-#     else:
-#         xticks([])
-# cax =fig.add_axes([0.1, 0.05, 0.8, 0.02])
-# colorbar(cb, cax=cax, orientation='horizontal', ticks=[0, 0.5, 1])

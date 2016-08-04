@@ -26,8 +26,6 @@ def find_station_id(con, address_latitude, address_longitude):
             break
     for station_id in nearest_stations:
         check_station_status = pd.read_sql_query("SELECT * FROM station_statuses WHERE station_id = %d;" %station_id, con)
-        # print len(check_station_status['event_date'])
-        # print station_info[(station_info['station_id'] == station_id)]['station_name']
 
     return nearest_stations
 
@@ -115,9 +113,6 @@ def weather_features(con, station_id):
                       "WHERE station_statuses.station_id = %d" %station_id
 
     hourly_data = pd.read_sql_query(sql_query, con)
-    # print hourly_data.info()
-    # daily_data = pd.read_sql_query(daily_query, con)
-    # print daily_data.info()
     return hourly_data
 
 
@@ -146,10 +141,3 @@ def hubway_station_features(station_id):
     hubway_station_data = holiday_feature(fix_datetimes(weather_features(hubway_conn, station_id)))
     nearby_station_data = nearby_station_features(hubway_conn, 3)
     return merge_datasets(hubway_station_data, nearby_station_data)
-#
-# hubway_data = hubway_station_features(3)
-# print hubway_data.info()
-# from pylab import *
-# figure()
-# plot(hubway_data['event_date'], hubway_data['precip'], 'k.')
-# show()

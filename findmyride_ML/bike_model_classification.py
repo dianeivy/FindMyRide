@@ -1,11 +1,9 @@
-import numpy as np
 import psycopg2
 from hubway_features import hubway_station_features
 import pandas as pd
 from sklearn import metrics
 from sklearn.ensemble import RandomForestClassifier
 from pylab import *
-from plot_figures import plot_data_parameters
 import pickle
 
 
@@ -18,7 +16,6 @@ def get_station_ids():
     con = psycopg2.connect(database='hubway_db', user='dianeivy')
     sql_query = "SELECT * FROM station_count;"
     station_info = pd.read_sql_query(sql_query, con)
-    print station_info[(station_info['event_count'] > 1000)]
     return station_info[(station_info['event_count'] > 1000)]['station_id'].values
 
 
@@ -43,7 +40,6 @@ def split_train_test(station_data):
 
 
 def train_model(train_data, validation_data):
-    ## need to add some more checks
     all_classifiers = []
     all_scores = []
     all_recall = []
@@ -60,41 +56,13 @@ def train_model(train_data, validation_data):
     return all_classifiers[np.argmax(all_recall)]
 
 
-# for station_number in get_station_ids():
-#     print(station_number)
-#     hubway_data = hubway_station_features(station_number)
-#     hubway_train, hubway_validate, hubway_test = split_train_test(hubway_data)
-#     best_rf_clf = train_model(hubway_train, hubway_validate)
-#     conf_matrix = metrics.confusion_matrix(hubway_test['binned_bikes'].values,
-#                                            best_rf_clf.predict(hubway_test[model_features].values))
-#     with open('../findmyride_models/rfc2_%d.pkl' %(station_number), 'wb') as f:
-#         pickle.dump(best_rf_clf, f)
-#     with open('../findmyride_models/rfc2_cm_%d.pkl' %(station_number), 'wb') as f:
-#         pickle.dump(conf_matrix, f)
-
-# hubway_data = hubway_station_features(48)
-# hubway_train, hubway_validate, hubway_test = split_train_test(hubway_data)
-# best_rf_clf = train_model(hubway_train, hubway_validate)
-#
-# plot_data_parameters(fs_offset=-6)
-# rcParams['axes.linewidth'] = 3
-# rcParams['axes.edgecolor'] = 'w'
-# rcParams['xtick.major.size'] = 0
-# rcParams['ytick.major.size'] = 0
-# rcParams['xtick.minor.size'] = 0
-# rcParams['ytick.minor.size'] = 0
-# rcParams['ytick.major.pad'] = '5'
-# rcParams['xtick.major.pad'] = '5'
-#
-# weekend_color = np.array([0, 221, 221]) / 255.
-# figure(figsize=(4, 3))
-# plot(hubway_test['event_date'], hubway_test['binned_bikes'].values, '.k', alpha=0.25)
-# plot(hubway_test['event_date'], best_rf_clf.predict(hubway_test[model_features].values), '.', mec=weekend_color, mfc=weekend_color, alpha=0.25)
-# # plot(hubway_test['event_dates'], hubway_test['binned_bikes'].values, 'm.')
-# # plot(hubway_test['binned_bikes'].values, best_rf_clf.predict(hubway_test[model_features].values), 'o', mec=weekend_color, mfc=weekend_color, alpha=0.5)
-# # xticks(np.arange(3), ['0 Bikes', '1-2 Bikes', '2+ Bikes'], color='w')
-# yticks(np.arange(3), ['0 Bikes', '1-2 Bikes', '2+ Bikes'], color='w')
-# # xlim(-0.5, 2.5)
-# xticks([])
-# ylim(-0.5, 2.5)
-# show()
+for station_number in get_station_ids():
+    hubway_data = hubway_station_features(station_number)
+    hubway_train, hubway_validate, hubway_test = split_train_test(hubway_data)
+    best_rf_clf = train_model(hubway_train, hubway_validate)
+    conf_matrix = metrics.confusion_matrix(hubway_test['binned_bikes'].values,
+                                           best_rf_clf.predict(hubway_test[model_features].values))
+    with open('../findmyride_models/rfc2_%d.pkl' %(station_number), 'wb') as f:
+        pickle.dump(best_rf_clf, f)
+    with open('../findmyride_models/rfc2_cm_%d.pkl' %(station_number), 'wb') as f:
+        pickle.dump(conf_matrix, f)

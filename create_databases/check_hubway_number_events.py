@@ -58,13 +58,7 @@ def run_db():
     Base.metadata.create_all(engine)
     count_events(engine)
 
-run_db()
 
-con = None
-con = psycopg2.connect(database=db_name, user='dianeivy', host='localhost', password='tmp_password')
+if __name__ == '__main__':
+    run_db()
 
-sql_query = """
-SELECT * FROM station_count;
-"""
-hubway_station = pd.read_sql_query(sql_query, con)
-print hubway_station

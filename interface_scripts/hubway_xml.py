@@ -1,12 +1,9 @@
-# import xml.etree.ElementTree as ET
-# tree = ET.parse('country_data.xml')
-# root = tree.getroot()
 import urllib2
 import xml.etree.ElementTree as ET
 from datetime import datetime
+from pylab import *
 
 
-# hdr =
 r = urllib2.Request("http://feeds.thehubway.com/stations/stations.xml") #, headers=hdr)
 u = urllib2.urlopen(r)
 doc = ET.parse(u)
@@ -26,7 +23,7 @@ for country in root.findall('station'):
         tmp_date = str(country.find('latestUpdateTime').text)[:-3]
         time_stamp.append(datetime.utcfromtimestamp(long(tmp_date)))
 
-from pylab import *
+
 figure()
 plot(num_bikes, 'k.')
 show()

@@ -74,11 +74,6 @@ def get_precip_data():
     date_indices = np.argsort(all_precip_dates_unsorted)
     return np.array(all_precip_dates_unsorted)[date_indices], np.array(all_precip_data_unsorted)[date_indices]
 
-precip_dates, precip_data = get_precip_data()
-from pylab import *
-figure()
-plot(precip_dates, precip_data, 'k.')
-show()
 
 def get_weather_data():
 
@@ -105,15 +100,13 @@ def get_weather_data():
            np.array(all_weather_temp_unsorted)[date_indices]
 
 
-precip_dates, precip_data = get_precip_data()
-weather_dates, weather_ws, weather_temp = get_weather_data()
-print np.min(weather_ws), np.max(weather_ws)
-print np.min(weather_temp), np.max(weather_temp)
-
 def create_weather_table(engine):
     session = sessionmaker()
     session.configure(bind=engine)
     s = session()
+
+    precip_dates, precip_data = get_precip_data()
+    weather_dates, weather_ws, weather_temp = get_weather_data()
 
     all_dates = np.sort(list(set(list(precip_dates) + list(weather_dates))))
     precip_dates_date = [tmp_date.date() for tmp_date in precip_dates]
@@ -142,32 +135,15 @@ def create_weather_table(engine):
     s.close()
 
 
-# def run_db():
-#     db_name = 'weather_check'
-#
-#     engine = create_findmyride_database(db_name)
-#     Base.metadata.create_all(engine)
-#     create_weather_table(engine)
-#
-#
-# # run_db()
-#
-# con = None
-# con = psycopg2.connect(database='weather_check', user='dianeivy', host='localhost', password='tmp_password')
-#
-# sql_query = """
-# SELECT * FROM weather_hourly;
-# """
-# hubway_station = pd.read_sql_query(sql_query, con)
-# print hubway_station.info()
-# print hubway_station.head()
-# from pylab import *
-# figure()
-# subplot(1, 2, 1)
-# plot(hubway_station['event_date_weather'], hubway_station['temp_avg'], 'k.')
-# subplot(1, 2, 2)
-# plot(hubway_station['event_date_weather'], hubway_station['precip'], 'k.')
-# show()
+def run_db():
+    db_name = 'weather_check'
+
+    engine = create_findmyride_database(db_name)
+    Base.metadata.create_all(engine)
+    create_weather_table(engine)
+
+if __name__ == '__main__':
+    run_db()
 
 
 

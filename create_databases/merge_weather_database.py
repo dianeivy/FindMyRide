@@ -106,27 +106,10 @@ def create_weather_table(engine):
 
 def run_db():
     db_name = 'hubway_db2'
-    # os.system('dropdb weather_check2')
     engine = create_findmyride_database(db_name)
     Base.metadata.create_all(engine)
     create_weather_table(engine)
 
 
-run_db()
-
-con = None
-con = psycopg2.connect(database='hubway_db2', user='dianeivy', host='localhost', password='tmp_password')
-
-# hourly_weather = pd.read_sql_query("SELECT * FROM weather_hourly;", con)
-merged_weather = pd.read_sql_query("SELECT * FROM weather_merged;", con)
-print merged_weather.info()
-print merged_weather.head()
-from pylab import *
-figure()
-subplot(1, 2, 1)
-plot(merged_weather['event_date_weather'], merged_weather['temp_avg'], 'k.')
-subplot(1, 2, 2)
-plot(merged_weather['event_date_weather'], merged_weather['precip'], 'k.')
-print(merged_weather['precip'].count())
-show()
-
+if __name__ == '__main__':
+    run_db()
